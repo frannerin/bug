@@ -1,6 +1,6 @@
 import sys, os, time
 
-from .utils import *
+from . import utils
 
     
     
@@ -23,14 +23,10 @@ class Pkg:
         
     def __init__(self, *args, **kwargs):
         for xtc in self._trajectories:
-            self._calculate(xtc)
-            # time.sleep(0.25)
+            utils.get_pool().apply_async(self._computation,
+                                         args=(xtc,))
+            # time.sleep(1)
         
-        
-    
-    def _calculate(self, xtc):
-        get_pool().apply_async(self._computation,
-                               args=(xtc,))
         
     # def _computation
     
